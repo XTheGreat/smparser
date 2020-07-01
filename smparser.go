@@ -1,7 +1,7 @@
 package smparser
 
-// Matches returns true if the input string matches the pattern
-func Matches(pattern string, str string) bool {
+// MatchString returns true if the input string matches the pattern
+func MatchString(pattern string, str string) bool {
 	EOF := len(str)
 	finalState := len(pattern) - 1
 
