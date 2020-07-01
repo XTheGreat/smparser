@@ -25,7 +25,7 @@ if reached final state, return true
 ```
 
 
-For example, to match any string with the pattern ba*ab, where the inputs to each state will be: 0[b] 1[a] 2[*] 3[a] 4[b]. Given an input _barrack_ which goes from states: 0[b] -> 1[a] -> 2[rr] -> 3[a]. There is a backtrack to state 2 at input c and since it remains in this state until end of file, there's no match. Another input _barrackab_ would go from states: 0[b] -> 1[a] -> 2[rr] -> 3[a] -> 2[ck] -> 3[a] -> 4[b]. The input gets to the final state, hence it's a match.
+For example, to match any string with the pattern ba\*ab, where the inputs to each state will be: 0[b] 1[a] 2[\*] 3[a] 4[b]. Given an input _barrack_ which goes from states: 0[b] -> 1[a] -> 2[rr] -> 3[a]. There is a backtrack to state 2 at input c and since it remains in this state until end of file, there's no match. Another input _barrackab_ would go from states: 0[b] -> 1[a] -> 2[rr] -> 3[a] -> 2[ck] -> 3[a] -> 4[b]. The input gets to the final state, hence it's a match.
 
 
 ## Testing
