@@ -2,7 +2,7 @@
 Simpler lightweight function to match wildcard patterns faster.
 
 ## The algorithm
-This function seeks to find the best way to return quickly. It starts by comparing the characters from last found wildcard in the pattern with the last tokens of the input and returns false if there's no match.
+This function seeks to find the best way to return quickly. It starts by comparing the characters from last found wildcard in the pattern with the last tokens of the input and returns false if there's no match. Then it parses the input in a state machine and compares read input with state token. The function evaluates to true if final state/token is reached.
 
 ```
 while not (EOF or out of token):
@@ -12,7 +12,7 @@ while not (EOF or out of token):
 		if next pattern token not out of range and is either wildcard or input char:
 			goto (next token)
 			goto (same input)
-  else if no loopback or loopback is at skip:
+  else if no loopback:
 			return
 	else:
 		goto (loopback token)
