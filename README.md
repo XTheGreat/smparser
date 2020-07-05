@@ -1,32 +1,27 @@
 # smparser
-Matching wildcards string patterns based on state machine. Due to how expensive alternative pattern matching algorithms were, I wrote this lightweight finite state machine function to match wildcard strings.
+Simpler lightweight function to match wildcard patterns faster.
 
 ## The algorithm
+This function seeks to find the best way to return quickly. It starts by comparing the characters from last found wildcard in the pattern with the last tokens of the input and returns false if there's no match.
+
 ```
-while not EOF and final state:
-  if input char is equal state token:
-    goto next token
-  else:
-    if state token is not wildcard:
-      if no previous state wildcard:
-        break loop and return false
-      current state moves to previous wildcard
-    else:
-      next wildcard state is current token
+while not (EOF or out of token):
+  if read input is equal token:
+		goto (next token)
+  else if token is wildcard:
+		if next pattern token not out of range and is either wildcard or input char:
+			goto (next token)
+			goto (same input)
+  else if no loopback or loopback is at skip:
+			return
+	else:
+		goto (loopback token)
+		goto (same input)
 
-    if input char is equal peek(next token):
-      goto previous input char
-      goto next token
-    if peek(next token) is wildcard:
-      goto next token
-
-    goto next cursor
-if reached final state, return true
+evaluate match (true iff reached final token)
 ```
-
-
-For example, to match any string with the pattern ba*ab, where the inputs to each state will be: 0[b] 1[a] 2[*] 3[a] 4[b]. Given an input _barrack_ which goes from states: 0[b] -> 1[a] -> 2[rr] -> 3[a]. There is a backtrack to state 2 at input c and since it remains in this state until end of file, there's no match. Another input _barrackab_ would go from states: 0[b] -> 1[a] -> 2[rr] -> 3[a] -> 2[ck] -> 3[a] -> 4[b]. The input gets to the final state, hence it's a match.
-
 
 ## Testing
-Benchmark test compares `smparser.MatchString` method with `regexp.MatchString`. regexp takes about 1.886s to compute while smparser takes about 0.459s.
+Benchmark test compares `smparser.MatchString` method with `regexp.MatchString`. The input is `https://www.examples.com/tutorials/hello-world/result.json` and given pattern is `https://www*.examples.com/*/*/result.jso*` where '\*' represents wildcard ('.\*' for regexp). Here, the match is true and it smparser takes an computation average time of 125 ns/op while it takes regexp 9896 ns/op. Another metric worth mentioning is memory usage/alloc. regexp's memory use for given example is 8373 B/op and 50 allocs/op. For any given input, smparser's memory use is 0B and 0 alloc.
+
+
