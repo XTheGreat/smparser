@@ -22,6 +22,9 @@ evaluate match (true iff reached final token)
 ```
 
 ## Testing
-Benchmark test compares `smparser.MatchString` method with `regexp.MatchString`. The input is `https://www.examples.com/tutorials/hello-world/result.json` and given pattern is `https://www*.examples.com/*/*/result.jso*` where '\*' represents wildcard ('.\*' for regexp). The expected evaluation is true. regexp takes an average computation time of 9896 ns/op while smparser computes in 125 ns/op. regexp's memory use for the given example is 8373 B/op and 50 allocs/op. For any given input, smparser's memory use is 0B and 0 alloc.
+```
+BenchmarkSmparser-8   	 9024852	       135 ns/op	       0 B/op	       0
+BenchmarkRegexp-8   	  122932	      9661 ns/op	    8363 B/op	      50 allocs/op
+```
 
 

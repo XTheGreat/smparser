@@ -42,6 +42,7 @@ func TestSmparserNoMatch(t *testing.T) {
 		"ba*ab*a*ba*ba",
 		"**ed*a*b**b*ad",
 		"*of*ig**on*",
+		"this-is-a-string-that-is-not-short*-intentionally",
 	}
 	input := []string{
 		"nonplussed",
@@ -49,6 +50,7 @@ func TestSmparserNoMatch(t *testing.T) {
 		"balderdash absolutely bad bubba",
 		"ahmedabad",
 		"configuration",
+		"this-is-a-string",
 	}
 	if len(pattern) != len(input) {
 		t.Errorf("len error")

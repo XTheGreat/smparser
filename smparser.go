@@ -1,11 +1,12 @@
 package smparser
 
+// MatchString returns true if input string has an exact match to given pattern
 func MatchString(pattern string, str string) bool {
+	if pattern == str {
+		return true
+	}
 	EOF := len(str)
 	final := len(pattern)
-	if EOF == 0 || final == 0 {
-		return final == EOF
-	}
 	skip := -1
 	for i := 0; i < final; i++ {
 		if pattern[i] == '*' {
@@ -16,6 +17,10 @@ func MatchString(pattern string, str string) bool {
 		return false
 	}
 	nstr := EOF - (final - skip) + 1
+	if nstr < 0 {
+		// input shorter than pattern
+		return false
+	}
 	if skip != -1 && pattern[skip+1:final] != str[nstr:EOF] {
 		return false
 	}
